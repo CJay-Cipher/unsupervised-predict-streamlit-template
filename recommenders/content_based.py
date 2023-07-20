@@ -55,7 +55,7 @@ def data_preprocessing(subset_size):
 
     """
     # Split genre data into individual words.
-    movies['keyWords'] = movies['genres'].str.replace('|', ' ')
+    movies['keyWords'] = movies['genres'].str.replace('|', ' ', regex=False)
     # Subset of the data
     movies_subset = movies[:subset_size]
     return movies_subset
@@ -81,7 +81,7 @@ def content_model(movie_list,top_n=10):
     """
     # Initializing the empty list of recommended movies
     recommended_movies = []
-    data = data_preprocessing(10000)
+    data = data_preprocessing(5000)
     
     # Instantiating and generating the count matrix
     count_vec = CountVectorizer()
