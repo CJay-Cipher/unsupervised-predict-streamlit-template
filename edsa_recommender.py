@@ -59,7 +59,7 @@ def main():
         # Header contents
         st.image('resources/imgs/name_image.png',use_column_width=True)
         # st.write('# Movie Recommender Engine')
-        st.write('## ----------- Movie Recommender Engine -----------')
+        st.write('## Movie Recommender Engine')
         st.image('resources/imgs/movie_page.png',use_column_width=True)
         # Recommender System algorithm selection
         sys = st.radio("Select an algorithm",
@@ -117,7 +117,7 @@ def main():
         st.markdown(
             """
             __Welcome to our Movie Recommender App!__
-            
+
             At RECORDmender, we believe that every movie night should be unforgettable.
             We understand the excitement of discovering new films that captivate your heart
             and transport you to different worlds. That's why we've built a powerful movie
