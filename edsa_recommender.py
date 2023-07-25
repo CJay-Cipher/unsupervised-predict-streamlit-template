@@ -45,7 +45,7 @@ def main():
 
     # DO NOT REMOVE the 'Recommender System' option below, however,
     # you are welcome to add more options to enrich your app.
-    page_options = ["Recommender System","Solution Overview"]
+    page_options = ["Recommender System","Solution Overview", "FAQ"]
 
     # -------------------------------------------------------------------
     # ----------- !! THIS CODE MUST NOT BE ALTERED !! -------------------
@@ -55,7 +55,7 @@ def main():
         # Header contents
         st.write('# Movie Recommender Engine')
         st.write('### EXPLORE Data Science Academy Unsupervised Predict')
-        st.image('resources/imgs/Image_header.png',use_column_width=True)
+        st.image('resources/imgs/movie_page.png',use_column_width=True)
         # Recommender System algorithm selection
         sys = st.radio("Select an algorithm",
                        ('Content Based Filtering',
@@ -100,13 +100,18 @@ def main():
     # -------------------------------------------------------------------
 
     # ------------- SAFE FOR ALTERING/EXTENSION -------------------
-    if page_selection == "Solution Overview":
+    elif page_selection == "Solution Overview":
         st.title("Solution Overview")
         st.write("Describe your winning approach on this page")
 
     # You may want to add more sections here for aspects such as an EDA,
     # or to provide your business pitch.
 
+    elif page_selection == "FAQ":
+        st.title("FAQs for our movie recommender system app")
+        st.subheader("1. What is the purpose of this movie recommender system app?")
+        st.write("The app aims to provide personalized movie recommendations based on user preferences.")
+ 
 
 if __name__ == '__main__':
     main()
