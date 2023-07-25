@@ -27,6 +27,7 @@
 """
 # Streamlit dependencies
 import streamlit as st
+import requests
 
 # Data handling dependencies
 import pandas as pd
@@ -37,6 +38,8 @@ from utils.data_loader import load_movie_titles
 from recommenders.collaborative_based import collab_model
 from recommenders.content_based import content_model
 
+from utils.faq import faq
+
 # Data Loading
 title_list = load_movie_titles('resources/data/movies.csv')
 
@@ -45,7 +48,8 @@ def main():
 
     # DO NOT REMOVE the 'Recommender System' option below, however,
     # you are welcome to add more options to enrich your app.
-    page_options = ["Recommender System","Solution Overview", "FAQ"]
+    page_options = ["Recommender System","Solution Overview",
+                    "Movie Search", "About Us", "FAQ"]
 
     # -------------------------------------------------------------------
     # ----------- !! THIS CODE MUST NOT BE ALTERED !! -------------------
@@ -107,11 +111,39 @@ def main():
     # You may want to add more sections here for aspects such as an EDA,
     # or to provide your business pitch.
 
-    elif page_selection == "FAQ":
+    elif page_selection == "About Us":
         st.title("FAQs for our movie recommender system app")
         st.subheader("1. What is the purpose of this movie recommender system app?")
         st.write("The app aims to provide personalized movie recommendations based on user preferences.")
- 
+    
+    elif page_selection == "Movie Search":
+        api_key = "87d991ea"
+        title = st.text_input("Enter a movie title")
+        if title:
+            try:
+                url = f"http://www.omdbapi.com/?t={title}&apikey={api_key}"
+                re = requests.get(url)
+                re = re.json()
+                col1, col2= st.columns([1, 2])
+                with col1:
+                    st.image(re["Poster"])
+                with col2:
+                    st.subheader(re["Title"])
+                    st.caption(f"GENRE: {re['Genre']}, YEAR: {re['Year']} ")
+                    st.caption(re["Plot"])
+                    st.progress(float(re['imdbRating']) / 10)
+                    st.text(f"Rating: {re['imdbRating']} / 10")
+            except:
+                st.error(f"No movie with title '{title}'")
+    elif page_selection == "FAQ":
+        st.title("FAQs for our movie recommender")
+        faq_select = st.selectbox("Select below", list(faq.keys()))
+        st.markdown(faq[faq_select])
+        # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
+        # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
+    
 
+
+        
 if __name__ == '__main__':
     main()
