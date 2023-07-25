@@ -28,6 +28,7 @@
 # Streamlit dependencies
 import streamlit as st
 import requests
+import base64
 
 # Data handling dependencies
 import pandas as pd
@@ -43,9 +44,26 @@ from utils.faq import faq
 # Data Loading
 title_list = load_movie_titles('resources/data/movies.csv')
 
+dataset = st.container()
+
 # App declaration
 def main():
-
+    def add_bg_from_local(image_file):
+        with open(image_file, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+        st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+            background-size: cover
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+    
+    
     # DO NOT REMOVE the 'Recommender System' option below, however,
     # you are welcome to add more options to enrich your app.
     page_options = ["Recommender System","Solution Overview",
@@ -56,11 +74,53 @@ def main():
     # -------------------------------------------------------------------
     page_selection = st.sidebar.selectbox("Choose Option", page_options)
     if page_selection == "Recommender System":
+        
+        add_bg_from_local('recommend2.jpg')
+
         # Header contents
         st.image('resources/imgs/name_image.png',use_column_width=True)
-        # st.write('# Movie Recommender Engine')
         st.write('## Movie Recommender Engine')
-        st.image('resources/imgs/movie_page.png',use_column_width=True)
+        
+        # st.image('resources/imgs/main_image.png',use_column_width=True)
+        st.image('https://miro.medium.com/v2/resize:fit:720/format:webp/1*t98V5s6uNKVNEde5ZYQemw.jpeg',use_column_width=True)
+
+        # col1, col2, col3, col4, col5 = st.columns(5)
+        # with col1:
+        #     st.caption("The Iron Man")
+        #     st.image("resources/imgs/iron_man.jpg")
+        # with col2:
+        #     st.caption("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+
+        # with col3:
+        #     st.caption("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+        # with col4:
+        #     st.caption("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+        # with col5:
+        #     st.caption("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+
+
+        # col6, col7, col8, col9, col10 = st.columns(5)
+        # with col6:
+        #     st.text("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+        # with col7:
+        #     st.text("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+
+        # with col8:
+        #     st.text("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+        # with col9:
+        #     st.text("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+        # with col10:
+        #     st.text("The End Game")
+        #     st.image("https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
+
         # Recommender System algorithm selection
         sys = st.radio("Select an algorithm",
                        ('Content Based Filtering',
@@ -106,13 +166,39 @@ def main():
 
     # ------------- SAFE FOR ALTERING/EXTENSION -------------------
     elif page_selection == "Solution Overview":
-        st.title("Solution Overview")
-        st.write("Describe your winning approach on this page")
+        add_bg_from_local('background3.jpg')
+        with dataset:
+            st.title("Solution Overview")
+            st.subheader("Insights on the Movie dataset")
+
+            st.image("resources/visuals/ratings.png")
+            st.image("resources/visuals/top_users.png")
+            st.image("resources/visuals/genre_count.png")
+            st.image("resources/visuals/yearly_movies.png")
+            st.image("resources/visuals/yearly_avg.png")
+            st.image("resources/visuals/word_cloud2.png")
+            st.image("resources/visuals/popular_movies.png")
+            # st.image("resources/visuals/rated_movies.png")
+            st.image("resources/visuals/rated_directors.png")
+            st.image("resources/visuals/top_actors.png")
+
+           
+
+            # movie_data = pd.read_csv("resources/data/movies.csv")
+            # ratings_data = pd.read_csv("resources/data/ratings.csv")
+            # merge_data = movie_data.merge(ratings_data.drop("timestamp", axis=1), on="movieId")
+            # merge_data.dropna(inplace=True)
+            # st.write(merge_data.head())
+            
+            # unique_ratings = merge_data.groupby('rating').size().reset_index(name='count').sort_values("rating")
+            # unique_ratings.set_index("rating", inplace=True)
+            # st.bar_chart(unique_ratings)
 
     # You may want to add more sections here for aspects such as an EDA,
     # or to provide your business pitch.
 
     elif page_selection == "About Us":
+        add_bg_from_local('rec_app.jpg')
         st.title("About Us")
         st.markdown(
             """
@@ -150,8 +236,10 @@ def main():
         st.image('resources/imgs/team_bm2.png',use_column_width=True)
     
     elif page_selection == "Movie Search":
+        add_bg_from_local('background3.jpg')
         api_key = "87d991ea"
-        title = st.text_input("Enter a movie title")
+        st.subheader("Enter a Movie Title")
+        title = st.text_input("")
         if title:
             try:
                 url = f"http://www.omdbapi.com/?t={title}&apikey={api_key}"
@@ -163,17 +251,20 @@ def main():
                 with col2:
                     st.subheader(re["Title"])
                     st.caption(f"GENRE: {re['Genre']}, YEAR: {re['Year']} ")
-                    st.caption(re["Plot"])
+                    st.write(re["Plot"])
                     st.progress(float(re['imdbRating']) / 10)
-                    st.text(f"Rating: {re['imdbRating']} / 10")
+                    st.text(f"Rating: {float(re['imdbRating'])/2} / 5")
             except:
                 st.error(f"No movie with title '{title}'")
     elif page_selection == "FAQ":
+        add_bg_from_local('recommend2.jpg')
         st.title("Frequently Asked Questions")
         faq_select = st.selectbox("Select from the dropdown below", list(faq.keys()))
         st.markdown(faq[faq_select])
         # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
         # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
+        
+    st.sidebar.image("main9.jpg", use_column_width=True)
     
 
 
