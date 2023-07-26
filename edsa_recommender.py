@@ -75,7 +75,7 @@ def main():
     page_selection = st.sidebar.selectbox("Choose Option", page_options)
     if page_selection == "Recommender System":
         
-        add_bg_from_local('recommend2.jpg')
+        add_bg_from_local('resources/imgs/recommend2.jpg')
 
         # Header contents
         st.image('resources/imgs/name_image.png',use_column_width=True)
@@ -166,7 +166,7 @@ def main():
 
     # ------------- SAFE FOR ALTERING/EXTENSION -------------------
     elif page_selection == "Solution Overview":
-        add_bg_from_local('background3.jpg')
+        add_bg_from_local('resources/imgs/background3.jpg')
         with dataset:
             st.title("Solution Overview")
             st.subheader("Insights on the Movie dataset")
@@ -198,7 +198,7 @@ def main():
     # or to provide your business pitch.
 
     elif page_selection == "About Us":
-        add_bg_from_local('rec_app.jpg')
+        add_bg_from_local('resources/imgs/rec_app.jpg')
         st.title("About Us")
         st.markdown(
             """
@@ -236,7 +236,7 @@ def main():
         st.image('resources/imgs/team_bm2.png',use_column_width=True)
     
     elif page_selection == "Movie Search":
-        add_bg_from_local('background3.jpg')
+        add_bg_from_local('resources/imgs/background3.jpg')
         api_key = "87d991ea"
         st.subheader("Enter a Movie Title")
         title = st.text_input("")
@@ -257,14 +257,14 @@ def main():
             except:
                 st.error(f"No movie with title '{title}'")
     elif page_selection == "FAQ":
-        add_bg_from_local('recommend2.jpg')
+        add_bg_from_local('resources/imgs/recommend2.jpg')
         st.title("Frequently Asked Questions")
         faq_select = st.selectbox("Select from the dropdown below", list(faq.keys()))
         st.markdown(faq[faq_select])
         # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
         # st.selectbox("1. What is the purpose of this movie recommender system app?", faq_list.keys())
         
-    st.sidebar.image("main9.jpg", use_column_width=True)
+    st.sidebar.image("resources/imgs/main9.jpg", use_column_width=True)
     
 
 
