@@ -34,7 +34,6 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
-
 # Importing data
 movies = pd.read_csv('resources/data/movies.csv', sep = ',')
 ratings = pd.read_csv('resources/data/ratings.csv')
@@ -55,7 +54,7 @@ def data_preprocessing(subset_size):
 
     """
     # Split genre data into individual words.
-    movies['keyWords'] = movies['genres'].str.replace('|', ' ', regex=False)
+    movies['keyWords'] = movies['genres'].str.replace('|', ' ')
     # Subset of the data
     movies_subset = movies[:subset_size]
     return movies_subset
@@ -81,18 +80,16 @@ def content_model(movie_list,top_n=10):
     """
     # Initializing the empty list of recommended movies
     recommended_movies = []
-    data = data_preprocessing(5000)
-    
+    data = data_preprocessing(10000)
     # Instantiating and generating the count matrix
     count_vec = CountVectorizer()
     count_matrix = count_vec.fit_transform(data['keyWords'])
-    indices = pd.Series(data.index, index=data['title'])
+    indices = pd.Series(data['title'])
     cosine_sim = cosine_similarity(count_matrix, count_matrix)
-
     # Getting the index of the movie that matches the title
-    idx_1 = indices[movie_list[0]]
-    idx_2 = indices[movie_list[1]]
-    idx_3 = indices[movie_list[2]]
+    idx_1 = indices[indices == movie_list[0]].index[0]
+    idx_2 = indices[indices == movie_list[1]].index[0]
+    idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
     rank_1 = cosine_sim[idx_1]
     rank_2 = cosine_sim[idx_2]
