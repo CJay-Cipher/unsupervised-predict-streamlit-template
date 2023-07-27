@@ -121,9 +121,11 @@ def collab_model(movie_list,top_n=10):
 
     indices = pd.Series(movies_df['title'])
     movie_ids = pred_movies(movie_list)
-    df_init_users = ratings_df[ratings_df['userId']==movie_ids[0]]
+    df_init_users = pd.DataFrame(columns=ratings_df.columns)
     for i in movie_ids:
-        df_init_users=df_init_users._append(ratings_df[ratings_df['userId']==i])
+        user_ratings_df = ratings_df[ratings_df['userId'] == i]
+        df_init_users = pd.concat([df_init_users, user_ratings_df], ignore_index=True)
+        
     # Getting the cosine similarity matrix
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
     idx_1 = indices[indices == movie_list[0]].index[0]
