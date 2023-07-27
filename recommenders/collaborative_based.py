@@ -126,8 +126,6 @@ def collab_model(movie_list,top_n=10):
         user_ratings_df = ratings_df[ratings_df['userId'] == i]
         df_init_users = pd.concat([df_init_users, user_ratings_df], ignore_index=True)
         
-    # Print the first 5 rows of the resulting DataFrame
-    print(df_init_users.head())
     # Getting the cosine similarity matrix
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
     idx_1 = indices[indices == movie_list[0]].index[0]
