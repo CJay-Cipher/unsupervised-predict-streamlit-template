@@ -147,16 +147,16 @@ def main():
 
         if sys == 'Collaborative Based Filtering':
             if st.button("Recommend"):
-                # try:
-                with st.spinner('Crunching the numbers...'):
-                    top_recommendations = collab_model(movie_list=fav_movies,
-                                                        top_n=13)
-                st.title("We think you'll like:")
-                clean_movie_titles(top_recommendations)
+                try:
+                    with st.spinner('Crunching the numbers...'):
+                        top_recommendations = collab_model(movie_list=fav_movies,
+                                                            top_n=13)
+                    st.title("We think you'll like:")
+                    clean_movie_titles(top_recommendations)
                     
-                # except:
-                #     st.error("Oops! Looks like this algorithm does't work.\
-                #               We'll need to fix it!")
+                except:
+                    st.error("Oops! Looks like this algorithm does't work.\
+                              We'll need to fix it!")
 
 
     # -------------------------------------------------------------------
