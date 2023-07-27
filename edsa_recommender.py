@@ -78,6 +78,7 @@ def main():
                         # st.progress(float(re['imdbRating']) / 10)
                         st.text(f"IMDB Rating: {float(re['imdbRating'])}")
                 except:
+                    # we use pass only when the title is invalid or cannot be found IMDB database
                     pass
 
     def add_bg_from_local(image_file):
